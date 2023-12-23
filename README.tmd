@@ -1,0 +1,64 @@
+你好，原理如下：
+
+1.网易不会对cg视频进行保护，它储存在MCLauncher\Resource\video下，名为cg.mp4
+2.该视频可以被替换，并且网易会最大化播放这个视频
+3.账号以前在机器上没有登录记录，网易我的世界启动器就会播放cg来欢迎玩家
+  这个登录记录在C:\Users\（先行用户名）\AppData\Local\Netease\MCLauncher(PC4399_MCLauncher)\config\user下
+  你会发现有许多数字文件夹，然后里面有与文件夹同名称的 *.config 文件，
+其内容示例如下：
+  {
+  "AllowFriendRequestOption": 0,
+  "LauncherChangeAfterGameStart": 1,
+  "LauncherChangeAfterClose": 0,
+  "CloseChangeSetFlag": false,
+  "PlayCG": false, //这里就是是否播放cg了
+  "ShutDownCefOnGameStart": false,
+  "ActivityDateTime": "0001-01-01T00:00:00",
+  "OptionalMemory": true,
+  "GameMemorySize": 2032,
+  "UpdateCheck": false,
+  "FirstShowExpTip": false,
+  "SoundEnable": true,
+  "Volume": 100.0,
+  "ShowGameStoreIcon": true,
+  "LastViewDiamond": 0,
+  "LastConsumeDiamond": 0,
+  "MsgNotify": true,
+  "GameUpdateNotify": true,
+  "AllowGameInvite": true,
+  "AllowFriendRequest": true,
+  "NotificationEnable": true,
+  "RecentGameList": [],
+  "WaveInVol": 128,
+  "WaveOutVol": 128,
+  "DefaultCallKey": 61,
+  "WaveInDeviceIndex": -2,
+  "WaveOutDeviceIndex": -2,
+  "LastLogin": 0,
+  "LastUpdateGetSmsTimeStamp": 0,
+  "LastBindGetSmsTimeStamp": 0,
+  "LastQueryPayRecordTimeStamp": 0,
+  "ApplyFriendComment": "",
+  "EnableInterflowToolTip": true,
+  "SelectedLobbyMapId": null,
+  "Result": {
+    "a": true,
+    "b": "",
+    "c": null
+  }
+}
+
+将其修改为true，并且设置文件属性只读就可以了
+
+实现方法：
+1.读取注册表值：SOFTWARE\Netease\MCLauncher\InstallLocation或者SOFTWARE\Netease\PC4399_MCLauncher\DownloadPath
+注意读的是现行用户的注册表，这样你就可以获取网易我的世界盒子所安装的目录
+2.替换cg
+3.遍历并且修改C:\Users\（先行用户名）\AppData\Local\Netease\MCLauncher(PC4399_MCLauncher)\config\user下的所有文件夹下的 数字.config文件
+将其里面的"PlayCG"的值修改为true，并且设置文件只读
+4.屏蔽esc键，这样会使网易cg的视频无法被关闭
+
+注意：
+你可以修改成任何视频，并且保持你所编写的软件一直运行，这样你的朋友在登录游戏的时候就可以被吓一跳了:D
+
+
